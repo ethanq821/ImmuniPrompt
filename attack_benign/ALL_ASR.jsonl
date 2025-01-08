@@ -1,0 +1,8 @@
+{"model": "gpt4", "total_attempts": 2000, "successful_attacks": 48, "success_rate": 0.024}
+{"model": "gpt4o", "total_attempts": 2000, "successful_attacks": 60, "success_rate": 0.03}
+{"model": "gpt35", "total_attempts": 2000, "successful_attacks": 0, "success_rate": 0.0}
+{"model": "qwenturbe", "total_attempts": 2000, "successful_attacks": 58, "success_rate": 0.029}
+{"model": "qwenmax", "total_attempts": 2000, "successful_attacks": 38, "success_rate": 0.019}
+{"model": "qwenplus", "total_attempts": 2000, "successful_attacks": 49, "success_rate": 0.0245}
+{"model": "llama2", "total_attempts": 2000, "successful_attacks": 2, "success_rate": 0.001}
+{"model": "llama3", "total_attempts": 2000, "successful_attacks": 19, "success_rate": 0.0095}

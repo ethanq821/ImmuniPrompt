@@ -1,0 +1,9 @@
+{"model": "gpt35", "template_type": "simple", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 102, "attack_success_rate": 0.018558951965065504}
+{"model": "gpt4", "template_type": "simple", "fewshots": "0", "total_attempts": 5495, "successful_attacks": 0, "attack_success_rate": 0.0}
+{"model": "qwenmax", "template_type": "simple", "fewshots": "0", "total_attempts": 5719, "successful_attacks": 1, "attack_success_rate": 0.00017485574401119076}
+{"model": "qwenturbe", "template_type": "simple", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 89, "attack_success_rate": 0.016193595342066956}
+{"model": "mistral2", "template_type": "simple", "fewshots": "1", "total_attempts": 5496, "successful_attacks": 1958, "attack_success_rate": 0.3562590975254731}
+{"model": "mistral3", "template_type": "simple", "fewshots": "1", "total_attempts": 5496, "successful_attacks": 2302, "attack_success_rate": 0.4188500727802038}
+{"model": "llama3", "template_type": "full", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 7, "attack_success_rate": 0.0012736535662299854}
+{"model": "gpt35", "template_type": "simple", "fewshots": "1", "total_attempts": 102, "successful_attacks": 11, "attack_success_rate": 0.10784313725490197}
+{"model": "llama2", "template_type": "full", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 140, "attack_success_rate": 0.025473071324599708}

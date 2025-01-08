@@ -1,0 +1,16 @@
+{"model": "gpt4o", "template_type": "full", "baseline": "baseline1", "total_attempts": 1582, "successful_attacks": 12, "attack_success_rate": 0.007585335018963337}
+{"model": "qwenmax", "template_type": "full", "baseline": "baseline1", "total_attempts": 1582, "successful_attacks": 56, "attack_success_rate": 0.035398230088495575}
+{"model": "llama2", "template_type": "full", "baseline": "baseline1", "total_attempts": 1582, "successful_attacks": 6, "attack_success_rate": 0.0037926675094816687}
+{"model": "llama3", "template_type": "full", "baseline": "baseline1", "total_attempts": 1582, "successful_attacks": 1, "attack_success_rate": 0.0006321112515802782}
+{"model": "gpt4o", "template_type": "full", "baseline": "baseline2", "total_attempts": 1582, "successful_attacks": 15, "attack_success_rate": 0.009481668773704172}
+{"model": "qwenmax", "template_type": "full", "baseline": "baseline2", "total_attempts": 1582, "successful_attacks": 129, "attack_success_rate": 0.08154235145385588}
+{"model": "llama2", "template_type": "full", "baseline": "baseline2", "total_attempts": 1582, "successful_attacks": 1, "attack_success_rate": 0.0006321112515802782}
+{"model": "llama3", "template_type": "full", "baseline": "baseline2", "total_attempts": 1582, "successful_attacks": 12, "attack_success_rate": 0.007585335018963337}
+{"model": "gpt4o", "template_type": "full", "baseline": "baseline3", "total_attempts": 1582, "successful_attacks": 15, "attack_success_rate": 0.009481668773704172}
+{"model": "qwenmax", "template_type": "full", "baseline": "baseline3", "total_attempts": 1582, "successful_attacks": 67, "attack_success_rate": 0.042351453855878636}
+{"model": "llama3", "template_type": "full", "baseline": "baseline3", "total_attempts": 1582, "successful_attacks": 2, "attack_success_rate": 0.0012642225031605564}
+{"model": "llama2", "template_type": "full", "baseline": "baseline3", "total_attempts": 1582, "successful_attacks": 11, "attack_success_rate": 0.00695322376738306}
+{"model": "gpt4o", "template_type": "full", "baseline": "immuni", "total_attempts": 1582, "successful_attacks": 0, "attack_success_rate": 0.0}
+{"model": "qwenmax", "template_type": "full", "baseline": "immuni", "total_attempts": 707, "successful_attacks": 0, "attack_success_rate": 0.0}
+{"model": "llama2", "template_type": "full", "baseline": "immuni", "total_attempts": 1582, "successful_attacks": 3, "attack_success_rate": 0.0018963337547408343}
+{"model": "llama3", "template_type": "full", "baseline": "immuni", "total_attempts": 1582, "successful_attacks": 1, "attack_success_rate": 0.0006321112515802782}

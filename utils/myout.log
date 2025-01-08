@@ -1,0 +1,31 @@
+nohup: ignoring input
+Namespace(img_folder='/home/dev/zbq/dataset/sexy_scraper', config='/home/dev/zbq/atk/GADI/configs/masactrl_inpaint_single.py', ptb_model_path='/home/dev/zbq/models/sd1-5', tar_model_path='/home/dev/zbq/models/stable-diffusion-inpainting', save_path='/home/dev/zbq/atk/Janout/101_1', seed=3, start_num=1, end_num=30)
+Traceback (most recent call last):
+  File "/home/dev/zbq/atk/GADI/gadi_ddpm_inversion.py", line 455, in <module>
+    main(args)
+  File "/home/dev/zbq/atk/GADI/gadi_ddpm_inversion.py", line 374, in main
+    torch_dtype=torch_dtype,).to(config.DEVICE[0])
+                              ^^^^^^^^^^^^^^^^^^^^
+  File "/home/dev/zbq/.conda/lib/python3.12/site-packages/transformers/modeling_utils.py", line 3164, in to
+    return super().to(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dev/zbq/.conda/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1340, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/dev/zbq/.conda/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  File "/home/dev/zbq/.conda/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  File "/home/dev/zbq/.conda/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  File "/home/dev/zbq/.conda/lib/python3.12/site-packages/torch/nn/modules/module.py", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/home/dev/zbq/.conda/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1326, in convert
+    return t.to(
+           ^^^^^
+RuntimeError: CUDA error: invalid device ordinal
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

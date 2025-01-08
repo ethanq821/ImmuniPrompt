@@ -1,0 +1,13 @@
+{"model": "llama2", "template_type": "ori", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 725, "attack_success_rate": 0.1319141193595342}
+{"model": "llama3", "template_type": "ori", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 212, "attack_success_rate": 0.03857350800582242}
+{"model": "mistral2", "template_type": "ori", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 2520, "attack_success_rate": 0.4585152838427948}
+{"model": "gpt35", "template_type": "ori", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 167, "attack_success_rate": 0.030385735080058224}
+{"model": "mistral3", "template_type": "ori", "fewshots": "0", "total_attempts": 5496, "successful_attacks": 2830, "attack_success_rate": 0.514919941775837}
+{"model": "qwenmax", "template_type": "ori", "fewshots": "0", "total_attempts": 7973, "successful_attacks": 1165, "attack_success_rate": 0.14611814875203813}
+{"model": "qwenturbe", "template_type": "ori", "fewshots": "0", "total_attempts": 10114, "successful_attacks": 1564, "attack_success_rate": 0.15463713664227802}
+{"model": "qwenmax", "template_type": "ori", "fewshots": "0", "total_attempts": 15946, "successful_attacks": 2330, "attack_success_rate": 0.14611814875203813}
+{"model": "gpt4", "template_type": "ori", "fewshots": "0", "total_attempts": 5273, "successful_attacks": 222, "attack_success_rate": 0.04210127062393324}
+{"model": "qwenturbe", "template_type": "ori", "fewshots": "0", "total_attempts": 21106, "successful_attacks": 3345, "attack_success_rate": 0.15848573865251586}
+{"model": "mistral2", "template_type": "ori", "fewshots": "0", "total_attempts": 10992, "successful_attacks": 5040, "attack_success_rate": 0.4585152838427948}
+{"model": "mistral3", "template_type": "ori", "fewshots": "0", "total_attempts": 10992, "successful_attacks": 5660, "attack_success_rate": 0.514919941775837}
+{"model": "llama213b", "template_type": "ori", "fewshots": "0", "total_attempts": 9492, "successful_attacks": 482, "attack_success_rate": 0.05077960387694901}
