@@ -1,6 +1,6 @@
 import sys
 # 获取包含 utils 目录的父目录
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 
 import time
@@ -30,7 +30,7 @@ else:
     print("CUDA is not available. Using CPU.")
 
 
-model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
 
 model = AutoModelForCausalLM.from_pretrained(model_id)
 tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -188,9 +188,9 @@ def result_statistics(datas):
 
 def main():
 
-    input_file = f'/data/jiani/prompt_new/dataset/jailbreak/prompts_with_questions/jailbreak_prompts_question_1.jsonl'
-    success_file = '/data/jiani/prompt_new/attack/success_prompts/mistral/1_t.jsonl'
-    output_file = '/data/jiani/prompt_new/attack/result/mistral/1_t.jsonl'
+    input_file = f'/data/root/prompt_new/dataset/jailbreak/prompts_with_questions/jailbreak_prompts_question_1.jsonl'
+    success_file = '/data/root/prompt_new/attack/success_prompts/mistral/1_t.jsonl'
+    output_file = '/data/root/prompt_new/attack/result/mistral/1_t.jsonl'
     
     print('---------------------reading file over-------------------------')
     datas = read_jsonl_file(input_file)

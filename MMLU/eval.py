@@ -29,8 +29,8 @@ def evaluate(input_csv):
     return result
 
 if __name__ == '__main__':
-    input_dir = '/data/jiani/prompt_new/nomal_usage/MMLU/after'
-    output_dir = '/data/jiani/prompt_new/nomal_usage/MMLU/result'
+    input_dir = '/data/root/prompt_new/nomal_usage/MMLU/after'
+    output_dir = '/data/root/prompt_new/nomal_usage/MMLU/result'
     model_names = ['gpt4oraw']
     summary = []
     total = 0

@@ -1,6 +1,6 @@
 import json, os
 import sys, torch
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 import utils.models as model
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -445,7 +445,7 @@ mini3 = '''
 def local_mistral2(system_prompt, user_prompt, device = device):
 
     #start_time = time.time()
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     #load_time = time.time()
@@ -477,7 +477,7 @@ def local_mistral2(system_prompt, user_prompt, device = device):
 
 def local_mistral3(system_prompt, user_prompt, device = device):
 
-    model_id = '/data/jiani/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
+    model_id = '/data/root/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model.to(device)
@@ -588,7 +588,7 @@ def result_statistics(datas):
     return total_attempts, successful_attacks, success_rate
 
 def main():
-    current_directory = '/data/jiani/prompt_new/test_origin/result'
+    current_directory = '/data/root/prompt_new/test_origin/result'
     subdirectories = get_subdirectories(current_directory)
 
 
@@ -616,10 +616,10 @@ def main():
         sum_runtime = 0
 
         total_start = time.time()
-        filedata = load_jsonl('/data/jiani/prompt_new/dataset/new/output_q6_filter.jsonl')
+        filedata = load_jsonl('/data/root/prompt_new/dataset/new/output_q6_filter.jsonl')
         for model_names in model_list:
             print(model_names)
-            prompts_with_resp = '/data/jiani/prompt_new/llamaguard_judge/attack_new_dataset/ablation/'+model_names+'_'+prompt_type+'.jsonl'
+            prompts_with_resp = '/data/root/prompt_new/llamaguard_judge/attack_new_dataset/ablation/'+model_names+'_'+prompt_type+'.jsonl'
     #         for data in filedata:
     #             # if(data['id']>100):
     #             #     continue
@@ -634,14 +634,14 @@ def main():
     #             with open(prompts_with_resp, 'a') as f:
     #                 f.write(json.dumps(data) + '\n'
     #             )
-    #         with open("/data/jiani/prompt_new/llamaguard_judge/attack_new_dataset/ablation/overall_runtime.jsonl", 'a') as f:
+    #         with open("/data/root/prompt_new/llamaguard_judge/attack_new_dataset/ablation/overall_runtime.jsonl", 'a') as f:
     #             f.write(json.dumps({'model':model_names, 'runtime':sum_runtime}) + '\n')
     #     total_end = time.time()
 
     #     print("total time: ", total_end - total_start)
 
         
-            checkpoint_path = '/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_main_'+model_list[0]+'.json'
+            checkpoint_path = '/data/root/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_main_'+model_list[0]+'.json'
             start_subdir_index = 0
 
             # Load the checkpoint if it exists
@@ -655,15 +655,15 @@ def main():
                 try:
                     if(subdir in model_list):
                         print(f"Processing {subdir}...")
-                        prompts_with_resp = '/data/jiani/prompt_new/llamaguard_judge/attack_new_dataset/ablation/'+subdir+'_'+prompt_type+'.jsonl'
+                        prompts_with_resp = '/data/root/prompt_new/llamaguard_judge/attack_new_dataset/ablation/'+subdir+'_'+prompt_type+'.jsonl'
                         file_path = prompts_with_resp
-                        output_path = os.path.join('/data/jiani/prompt_new/llamaguard_judge/attack_new_dataset/ablation/',subdir+'_'+prompt_type+'_judge.jsonl')
+                        output_path = os.path.join('/data/root/prompt_new/llamaguard_judge/attack_new_dataset/ablation/',subdir+'_'+prompt_type+'_judge.jsonl')
                         datas = load_jsonl(file_path)
                         model.new_judgment_llama_guard2(datas, device, 1, model_name=subdir, outputpath=output_path) # return STRING "True" if success else "False"
                         # processing result
                         datas = load_jsonl(output_path)
                         result = result_statistics(datas)
-                        with open('/data/jiani/prompt_new/llamaguard_judge/attack_new_dataset/Ablation_ASR.jsonl', 'a') as f:
+                        with open('/data/root/prompt_new/llamaguard_judge/attack_new_dataset/Ablation_ASR.jsonl', 'a') as f:
                             f.write(json.dumps({'model': subdir,
                                                 'template_type': prompt_type,
                                                 'fewshots': '0',

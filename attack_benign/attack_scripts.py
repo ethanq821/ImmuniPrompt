@@ -1,6 +1,6 @@
 import json, os
 import sys, torch
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 import utils.models as model
 from transformers.generation.utils import GenerationConfig
@@ -36,7 +36,7 @@ def local_baichuan(system_prompt,user_prompt):
         device = torch.device("cpu")
         print("CUDA is not available. Using CPU.")
 
-    model_id = "/data/jiani/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
+    model_id = "/data/root/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     model.generation_config = GenerationConfig.from_pretrained(model_id)
@@ -68,7 +68,7 @@ def local_mistral(system_prompt,user_prompt):
         device = torch.device("cpu")
         print("CUDA is not available. Using CPU.")
 
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model.to(device)
@@ -240,7 +240,7 @@ system_prompt_simple = '''
         \n
     '''
 
-current_directory = '/data/jiani/prompt_new/attack/result'
+current_directory = '/data/root/prompt_new/attack/result'
 subdirectories = get_subdirectories(current_directory)
 
 model_list = ['gpt4o']
@@ -248,9 +248,9 @@ model_list = ['gpt4o']
 for subdir in subdirectories:
     if(subdir in model_list):
         print("Start of:", subdir)
-        file_path = '/data/jiani/prompt_new/dataset/benign/benign2000.jsonl'
-        output_path = os.path.join('/data/jiani/prompt_new/llamaguard_judge/attack_benign/results',subdir+'with_simpletemp.jsonl')
-        judged_path = os.path.join('/data/jiani/prompt_new/llamaguard_judge/attack_benign/judged',subdir+'with_simpletemp.jsonl')
+        file_path = '/data/root/prompt_new/dataset/benign/benign2000.jsonl'
+        output_path = os.path.join('/data/root/prompt_new/llamaguard_judge/attack_benign/results',subdir+'with_simpletemp.jsonl')
+        judged_path = os.path.join('/data/root/prompt_new/llamaguard_judge/attack_benign/judged',subdir+'with_simpletemp.jsonl')
 
         init_file(output_path)
         init_file(judged_path)
@@ -268,6 +268,6 @@ for subdir in subdirectories:
                 json.dump(data, f)
                 f.write('\n')
             
-        result_statistics(datas, '/data/jiani/prompt_new/llamaguard_judge/attack_benign/ALL_ASR_with_simpletemp.jsonl', subdir)
+        result_statistics(datas, '/data/root/prompt_new/llamaguard_judge/attack_benign/ALL_ASR_with_simpletemp.jsonl', subdir)
 
 print('All Finish.')

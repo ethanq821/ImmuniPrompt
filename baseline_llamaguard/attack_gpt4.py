@@ -1,6 +1,6 @@
 import json
 import sys
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 import utils.models as model
 from transformers.generation.utils import GenerationConfig
@@ -31,7 +31,7 @@ def local_baichuan(system_prompt,user_prompt):
         device = torch.device("cpu")
         print("CUDA is not available. Using CPU.")
 
-    model_id = "/data/jiani/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
+    model_id = "/data/root/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     model.generation_config = GenerationConfig.from_pretrained(model_id)
@@ -63,7 +63,7 @@ def local_mistral(system_prompt,user_prompt):
         device = torch.device("cpu")
         print("CUDA is not available. Using CPU.")
 
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model.to(device)
@@ -156,7 +156,7 @@ def judgment(response):
 
 dicts = {}
 safes = []
-with open('/data/jiani/prompt_new/test_llamaguard/llama_guard2_query_concise_safe.jsonl', 'r') as f:
+with open('/data/root/prompt_new/test_llamaguard/llama_guard2_query_concise_safe.jsonl', 'r') as f:
     for line in f:
         data = json.loads(line)
         if(data['judgment'] == 'safe'):
@@ -165,7 +165,7 @@ with open('/data/jiani/prompt_new/test_llamaguard/llama_guard2_query_concise_saf
 att_success = []
 
 start = time.time()
-with open('/data/jiani/prompt_new/test_llamaguard/results/result_gpt4.jsonl', "a", encoding='utf-8') as file:
+with open('/data/root/prompt_new/test_llamaguard/results/result_gpt4.jsonl', "a", encoding='utf-8') as file:
     for safe_prompt in safes:
             response = test_model(safe_prompt, 'gpt4')
             judgment_result = judgment(response)
@@ -183,7 +183,7 @@ with open('/data/jiani/prompt_new/test_llamaguard/results/result_gpt4.jsonl', "a
 end = time.time()
 print("Attack time:", end-start)
 print("Attack success rate:", sum(att_success)/len(att_success))
-with open('/data/jiani/prompt_new/test_llamaguard/Attack_Results.jsonl', "a", encoding='utf-8') as file:
+with open('/data/root/prompt_new/test_llamaguard/Attack_Results.jsonl', "a", encoding='utf-8') as file:
     output_record = {
         'ASR': sum(att_success)/len(att_success),
         'time': end-start,

@@ -1,9 +1,9 @@
 import sys
 # 获取包含 utils 目录的父目录
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 
 sys.path.append(parent_dir)
-#sys.path.append('/data/jiani/prompt')
+#sys.path.append('/data/root/prompt')
 
 import time
 import requests
@@ -133,10 +133,10 @@ def result_statistics(datas):
 
 def main():
 
-    input_file = f'/data/jiani/prompt_new/dataset/jailbreak/prompts_with_questions/jailbreak_prompts_question_1.jsonl'
-    #input_file = '/data/jiani/prompt_new/attack/result/llama3/1.jsonl'
-    success_file = '/data/jiani/prompt_new/attack/result/llama3/1_t.jsonl'
-    output_file = '/data/jiani/prompt_new/attack/result/llama3/1_notemp.jsonl'
+    input_file = f'/data/root/prompt_new/dataset/jailbreak/prompts_with_questions/jailbreak_prompts_question_1.jsonl'
+    #input_file = '/data/root/prompt_new/attack/result/llama3/1.jsonl'
+    success_file = '/data/root/prompt_new/attack/result/llama3/1_t.jsonl'
+    output_file = '/data/root/prompt_new/attack/result/llama3/1_notemp.jsonl'
     
     print('---------------------reading file over-------------------------')
     datas = read_jsonl_file(input_file)

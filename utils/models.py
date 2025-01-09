@@ -8,7 +8,7 @@ import random
 from io import BytesIO
 import json
 import sys
-sys.path.append('/data/jiani/prompt_new/utils')
+sys.path.append('/data/root/prompt_new/utils')
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
 from transformers.generation.utils import GenerationConfig
@@ -372,7 +372,7 @@ def llama2(user_prompt, system_prompt = "NULL"):
     if(system_prompt=="NULL"):
         system_prompt = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer.You can only complete one conversation "
 
-    model_id = "/data/jiani/prompt/Foundation_Model/Llama-2-7b-chat-hf"
+    model_id = "/data/root/prompt/Foundation_Model/Llama-2-7b-chat-hf"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -416,7 +416,7 @@ def llama2_13b(user_prompt, system_prompt = "NULL"):
     if(system_prompt=="NULL"):
         system_prompt = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer.You can only complete one conversation "
 
-    model_id = "/data/jiani/prompt/Foundation_Model/Llama-2-13b-chat-hf"
+    model_id = "/data/root/prompt/Foundation_Model/Llama-2-13b-chat-hf"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -461,7 +461,7 @@ def llama2_13b(user_prompt, system_prompt = "NULL"):
 def baichuan2(user_prompt):
     system_prompt = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer."
     
-    model_id = "/data/jiani/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
+    model_id = "/data/root/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
     tokenizer = AutoTokenizer.from_pretrained(model_id,trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(model_id,device_map=device, torch_dtype=torch.bfloat16,trust_remote_code=True)
 
@@ -481,7 +481,7 @@ def baichuan2(user_prompt):
 
 #  Hello! How can I assist you today?  注意，他并不是字符串！
 def qwen7b(user_prompt, sys_prompt="NULL", device=device):
-    model_id ='/data/jiani/prompt/Foundation_Model/Qwen1.5-7B-Chat'
+    model_id ='/data/root/prompt/Foundation_Model/Qwen1.5-7B-Chat'
     if(sys_prompt=="NULL"):
         system_prompt = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer. You can only complete one conversation "
     else:
@@ -521,7 +521,7 @@ def qwen7b(user_prompt, sys_prompt="NULL", device=device):
 
 #  hello 也没有字符串引号！
 def mistral_chat(user_prompt):
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -558,7 +558,7 @@ def llama3(user_prompt, sys_prompt="NULL", device=device):
     else:
         system_prompt = sys_prompt
         
-    model_id = "/data/jiani/prompt/Foundation_Model/Meta-Llama-3-8B-Instruct"
+    model_id = "/data/root/prompt/Foundation_Model/Meta-Llama-3-8B-Instruct"
     
     tokenizer = AutoTokenizer.from_pretrained(model_id,trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(model_id,device_map=device, torch_dtype=torch.bfloat16,trust_remote_code=True)
@@ -598,7 +598,7 @@ def llama3_1b(user_prompt, sys_prompt="NULL", device=device):
     else:
         system_prompt = sys_prompt
         
-    model_id = "/data/jiani/prompt/Foundation_Model/Llama-3.2-1B-Instruct"
+    model_id = "/data/root/prompt/Foundation_Model/Llama-3.2-1B-Instruct"
     
     tokenizer = AutoTokenizer.from_pretrained(model_id,trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(model_id,device_map=device, torch_dtype=torch.bfloat16,trust_remote_code=True)
@@ -641,7 +641,7 @@ def vicuna13bv15(user_prompt, sys_prompt="NULL", device=device):
     else:
         system_prompt = sys_prompt
     
-    model_id = '/data/jiani/prompt/Foundation_Model/vicuna-13b-v1.5'
+    model_id = '/data/root/prompt/Foundation_Model/vicuna-13b-v1.5'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -677,7 +677,7 @@ def qwen2(user_prompt, sys_prompt="NULL", device=device):
     else:
         system_prompt = sys_prompt
     
-    model_id = '/data/jiani/prompt/Foundation_Model/models--Qwen--Qwen2-7B-Instruct/snapshots/41c66b0be1c3081f13defc6bdf946c2ef240d6a6'
+    model_id = '/data/root/prompt/Foundation_Model/models--Qwen--Qwen2-7B-Instruct/snapshots/41c66b0be1c3081f13defc6bdf946c2ef240d6a6'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -710,7 +710,7 @@ def qwen2(user_prompt, sys_prompt="NULL", device=device):
 
 #  hello   也没有字符串引号！ good
 def mistralv03(user_prompt, device=device, system_prompt="NULL"):
-    model_id = '/data/jiani/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
+    model_id = '/data/root/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -748,7 +748,7 @@ def phi2(user_prompt, sys_prompt="NULL", device=device):
     else:
         system_prompt = sys_prompt
     
-    model_id = '/data/jiani/prompt/Foundation_Model/models--microsoft--phi-2/snapshots/ef382358ec9e382308935a992d908de099b64c23'
+    model_id = '/data/root/prompt/Foundation_Model/models--microsoft--phi-2/snapshots/ef382358ec9e382308935a992d908de099b64c23'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -786,7 +786,7 @@ def phi3_mini(user_prompt, sys_prompt="NULL", device=device):
     else:
         system_prompt = sys_prompt
     
-    model_id = '/data/jiani/prompt/Foundation_Model/models--microsoft--Phi-3-mini-128k-instruct/snapshots/5be6479b4bc06a081e8f4c6ece294241ccd32dec'
+    model_id = '/data/root/prompt/Foundation_Model/models--microsoft--Phi-3-mini-128k-instruct/snapshots/5be6479b4bc06a081e8f4c6ece294241ccd32dec'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -824,7 +824,7 @@ def vicuna7bv15(user_prompt, sys_prompt="NULL",device=device):
     else:
         system_prompt = sys_prompt
     
-    model_id = '/data/jiani/prompt/Foundation_Model/vicuna-13b-v1.5'
+    model_id = '/data/root/prompt/Foundation_Model/vicuna-13b-v1.5'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -857,7 +857,7 @@ def vicuna7bv15(user_prompt, sys_prompt="NULL",device=device):
 def gemma_chat(user_prompt, device=device):
     system_prompt = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer. Here is the question: "
     
-    model_id = "/data/jiani/prompt/Foundation_Model/gemma-7b"
+    model_id = "/data/root/prompt/Foundation_Model/gemma-7b"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id, device_map=device, torch_dtype=torch.bfloat16)
 
@@ -880,7 +880,7 @@ def vicuna7b(user_prompt, sys_prompt="NULL", device=device):
     else:
         system_prompt = sys_prompt
     
-    model_id = '/data/jiani/prompt/Foundation_Model/LEO/Vicuna-7b'
+    model_id = '/data/root/prompt/Foundation_Model/LEO/Vicuna-7b'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -912,7 +912,7 @@ def vicuna7b(user_prompt, sys_prompt="NULL", device=device):
 def judgment_llama_guard2(datas, device=device):
 
     prompts: List[Tuple[List[str], AgentType]] = []
-    model_id = "/data/jiani/prompt_new/test_llamaguard/llama-guard2-hf"
+    model_id = "/data/root/prompt_new/test_llamaguard/llama-guard2-hf"
     llama_guard_version = LlamaGuardVersion.LLAMA_GUARD_2
 
     for data in datas:
@@ -948,8 +948,8 @@ def judgment_llama_guard2(datas, device=device):
     return TF_results # should never reach here
 
 
-def new_judgment_llama_guard2(datas, device, magic=0, model_name="NULL", outputpath="NULL", prefix=False, checkpoint_path = "/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_judge_temp"):
-    model_id = "/data/jiani/prompt_new/test_llamaguard/llama-guard2-hf"
+def new_judgment_llama_guard2(datas, device, magic=0, model_name="NULL", outputpath="NULL", prefix=False, checkpoint_path = "/data/root/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_judge_temp"):
+    model_id = "/data/root/prompt_new/test_llamaguard/llama-guard2-hf"
     llama_guard_version = LlamaGuardVersion.LLAMA_GUARD_2
 
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -1032,7 +1032,7 @@ def new_judgment_llama_guard2(datas, device, magic=0, model_name="NULL", outputp
 # need improve
 def catagorize_llama_guard2(datas, device):
 
-    model_id = "/data/jiani/prompt_new/test_llamaguard/llama-guard2-hf"
+    model_id = "/data/root/prompt_new/test_llamaguard/llama-guard2-hf"
     llama_guard_version = LlamaGuardVersion.LLAMA_GUARD_2
 
     tokenizer = AutoTokenizer.from_pretrained(model_id)

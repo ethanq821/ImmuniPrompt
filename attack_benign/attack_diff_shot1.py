@@ -1,6 +1,6 @@
 import json, os
 import sys, torch
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 import utils.models as model
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -157,7 +157,7 @@ system_prompt_no_benign = '''
 def local_mistral2(system_prompt, user_prompt, device = device):
 
     start_time = time.time()
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     load_time = time.time()
@@ -189,7 +189,7 @@ def local_mistral2(system_prompt, user_prompt, device = device):
 
 def local_mistral3(system_prompt, user_prompt, device = device):
 
-    model_id = '/data/jiani/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
+    model_id = '/data/root/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model.to(device)
@@ -294,7 +294,7 @@ def result_statistics(datas):
     return total_attempts, successful_attacks, success_rate
 
 def main():
-    current_directory = '/data/jiani/prompt_new/test_origin/result'
+    current_directory = '/data/root/prompt_new/test_origin/result'
     subdirectories = get_subdirectories(current_directory)
 
     #model_list = ['gpt35', 'gpt4o', 'gpt4']                # done
@@ -321,10 +321,10 @@ def main():
     sum_attacktime = 0
 
     total_start = time.time()
-    filedata = load_jsonl('/data/jiani/prompt_new/llamaguard_judge/attack_benign/clean_data_2000.jsonl')
+    filedata = load_jsonl('/data/root/prompt_new/llamaguard_judge/attack_benign/clean_data_2000.jsonl')
     for model_names in model_list:
         print(model_names)
-        prompts_with_resp = '/data/jiani/prompt_new/llamaguard_judge/attack_benign/'+model_names+'with_benign.jsonl'
+        prompts_with_resp = '/data/root/prompt_new/llamaguard_judge/attack_benign/'+model_names+'with_benign.jsonl'
         for data in filedata[:200]:
             # if(data['id']<2456):
             #     continue
@@ -346,7 +346,7 @@ def main():
     # print('average load time: ', sum_loadtime / len(filedata))
     # print('average run time: ', sum_attacktime / len(filedata))
     
-    checkpoint_path = '/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_main_'+model_list[0]+'.json'
+    checkpoint_path = '/data/root/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_main_'+model_list[0]+'.json'
     start_subdir_index = 0
 
     # Load the checkpoint if it exists
@@ -360,15 +360,15 @@ def main():
         try:
             if(subdir in model_list):
                 print(f"Processing {subdir}...")
-                prompts_with_resp = '/data/jiani/prompt_new/llamaguard_judge/attack_benign/'+subdir+'with_benign.jsonl'
+                prompts_with_resp = '/data/root/prompt_new/llamaguard_judge/attack_benign/'+subdir+'with_benign.jsonl'
                 file_path = prompts_with_resp
-                output_path = os.path.join('/data/jiani/prompt_new/llamaguard_judge/attack_benign/',subdir+'with_benign_judge.jsonl')
+                output_path = os.path.join('/data/root/prompt_new/llamaguard_judge/attack_benign/',subdir+'with_benign_judge.jsonl')
                 datas = load_jsonl(file_path)
                 model.new_judgment_llama_guard2(datas, device, 1, model_name=subdir, outputpath=output_path) # return STRING "True" if success else "False"
                 # processing result
                 datas = load_jsonl(output_path)
                 result = result_statistics(datas)
-                with open('/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/Different_Template_ASR.jsonl', 'a') as f:
+                with open('/data/root/prompt_new/llamaguard_judge/attack_jailbreak/Different_Template_ASR.jsonl', 'a') as f:
                     f.write(json.dumps({'model': subdir,
                                         'template_type': 'simple',
                                         'fewshots': '1-with-benign',

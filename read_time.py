@@ -7,7 +7,7 @@ folders = ['qwenplus']
 for folder in folders:
     total_runtime = 0
     total_loadtime = 0
-    with open('/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/'+folder+'/our_overhead.jsonl', 'r') as f:
+    with open('/data/root/prompt_new/llamaguard_judge/attack_jailbreak/'+folder+'/our_overhead.jsonl', 'r') as f:
         datas = [json.loads(line) for line in f]
         folder_runtime = 0
         folder_loadtime = 0

@@ -1,6 +1,6 @@
 import json, os
 import sys, torch
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 import utils.models as model
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -42,7 +42,7 @@ else:
 
 def local_mistral2(system_prompt, user_prompt, device = device):
 
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model.to(device)
@@ -68,7 +68,7 @@ def local_mistral2(system_prompt, user_prompt, device = device):
 
 def local_mistral3(system_prompt, user_prompt, device = device):
 
-    model_id = '/data/jiani/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
+    model_id = '/data/root/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model.to(device)
@@ -177,7 +177,7 @@ def main():
     model_list = ['qwenmax', 'llama2', 'llama3', 'gpt4o']
     
     baseline = 'baseline2'
-    filedata = load_jsonl('/data/jiani/prompt_new/dataset/new/output_q6.jsonl')
+    filedata = load_jsonl('/data/root/prompt_new/dataset/new/output_q6.jsonl')
     for model_names in model_list:
         print(model_names)
         for data in filedata:
@@ -191,14 +191,14 @@ def main():
             User:''' + prompt
             response = test_model(prompt, model_names) # no specific system prompt
             data['response'] = response
-            with open('/data/jiani/prompt_new/test_sys_baseline123/'+model_names+'/'+f'{baseline}.jsonl', 'a') as f:
+            with open('/data/root/prompt_new/test_sys_baseline123/'+model_names+'/'+f'{baseline}.jsonl', 'a') as f:
                 f.write(json.dumps(data) + '\n'
             )
     
-    current_directory = '/data/jiani/prompt_new/test_sys_baseline123'
+    current_directory = '/data/root/prompt_new/test_sys_baseline123'
     subdirectories = get_subdirectories(current_directory)
 
-    checkpoint_path = f'/data/jiani/prompt_new/test_sys_baseline123/{baseline}_checkpoint_main_'+model_list[0]+'.json'
+    checkpoint_path = f'/data/root/prompt_new/test_sys_baseline123/{baseline}_checkpoint_main_'+model_list[0]+'.json'
     start_subdir_index = 0
 
     # Load the checkpoint if it exists
@@ -212,15 +212,15 @@ def main():
         try:
             if(subdir in model_list):
                 print(f"Processing {subdir}...")
-                prompts_with_resp = '/data/jiani/prompt_new/test_sys_baseline123/'+subdir+'/'+f'{baseline}.jsonl'
+                prompts_with_resp = '/data/root/prompt_new/test_sys_baseline123/'+subdir+'/'+f'{baseline}.jsonl'
                 file_path = prompts_with_resp
-                output_path = '/data/jiani/prompt_new/test_sys_baseline123/'+subdir+'/'+f'{baseline}_judge.jsonl'
+                output_path = '/data/root/prompt_new/test_sys_baseline123/'+subdir+'/'+f'{baseline}_judge.jsonl'
                 datas = load_jsonl(file_path)
                 model.new_judgment_llama_guard2(datas, device, 1, model_name=subdir, outputpath=output_path) # return STRING "True" if success else "False"
                 # processing result
                 datas = load_jsonl(output_path)
                 result = result_statistics(datas)
-                with open('/data/jiani/prompt_new/test_sys_baseline123/Different_Template_ASR.jsonl', 'a') as f:
+                with open('/data/root/prompt_new/test_sys_baseline123/Different_Template_ASR.jsonl', 'a') as f:
                     f.write(json.dumps({'model': subdir,
                                         'template_type': 'full',
                                         'baseline': f'{baseline}',

@@ -9,9 +9,9 @@ import dashscope
 from io import BytesIO
 import json
 import sys
-sys.path.append('/data/jiani/prompt_new/utils')
+sys.path.append('/data/root/prompt_new/utils')
 import sys, torch
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 import utils.models as model
 
@@ -311,7 +311,7 @@ def llama2( system_prompt,input_csv, output_csv):
     
     contral_system_prompt = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer.You can only complete one conversation "
 
-    model_id = "/data/jiani/prompt/Foundation_Model/Llama-2-7b-chat-hf"
+    model_id = "/data/root/prompt/Foundation_Model/Llama-2-7b-chat-hf"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -398,7 +398,7 @@ def llama3( system_prompt,input_csv, output_csv):
     
     contral_system_prompt = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer.You can only complete one conversation "
 
-    model_id = "/data/jiani/prompt/Foundation_Model/Meta-Llama-3-8B-Instruct"
+    model_id = "/data/root/prompt/Foundation_Model/Meta-Llama-3-8B-Instruct"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -481,7 +481,7 @@ def llama3( system_prompt,input_csv, output_csv):
     print(f"llama3处理完成！评估结果已保存至：{output_csv}")
 
 def mistral_chat(sys_prompt, input_csv, output_csv):
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
 
     model = AutoModelForCausalLM.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -545,15 +545,15 @@ def mistral_chat(sys_prompt, input_csv, output_csv):
     print(f"mistral处理完成！评估结果已保存至：{output_csv}")
 
 
-# # list all files in /data/jiani/prompt_new/nomal_usage/MMLU/test
-# files = os.listdir('/data/jiani/prompt_new/nomal_usage/MMLU/test') 
+# # list all files in /data/root/prompt_new/nomal_usage/MMLU/test
+# files = os.listdir('/data/root/prompt_new/nomal_usage/MMLU/test') 
 
 # for file in files:
 #     for models in ['gpt4oraw']:
 #         if file.endswith('.csv'):
-#             input_csv = os.path.join('/data/jiani/prompt_new/nomal_usage/MMLU/test', file)
-#             output_csv = os.path.join('/data/jiani/prompt_new/nomal_usage/MMLU/after', models, file)
-#             already_done = os.listdir('/data/jiani/prompt_new/nomal_usage/MMLU/after/' + models)
+#             input_csv = os.path.join('/data/root/prompt_new/nomal_usage/MMLU/test', file)
+#             output_csv = os.path.join('/data/root/prompt_new/nomal_usage/MMLU/after', models, file)
+#             already_done = os.listdir('/data/root/prompt_new/nomal_usage/MMLU/after/' + models)
 #             if('gpt4o' in models):
 #                 if file not in already_done:
 #                     mmlu_gpt4o(input_csv, output_csv)
@@ -574,21 +574,21 @@ def mistral_chat(sys_prompt, input_csv, output_csv):
 # mmlu_gpt4o(mmlu_us, gpt4_us_result_path)
 
 
-# ll_math_result_path = '/data/jiani/prompt_new/nomal_usage/MMLU/after/llama2/math_result.csv'  # 输出文件路径
-# ll_us_result_path = '/data/jiani/prompt_new/nomal_usage/MMLU/after/llama2/us_result.csv'
+# ll_math_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/llama2/math_result.csv'  # 输出文件路径
+# ll_us_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/llama2/us_result.csv'
 
 # llama2(sys_prompt, mmlu_math, ll_math_result_path)
 # llama2(sys_prompt, mmlu_us, ll_us_result_path)
 
-# mis_math_result_path = '/data/jiani/prompt_new/nomal_usage/MMLU/after/mistral2/math_result.csv'
-# mis_us_result_path = '/data/jiani/prompt_new/nomal_usage/MMLU/after/mistral2/us_result.csv'
+# mis_math_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/mistral2/math_result.csv'
+# mis_us_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/mistral2/us_result.csv'
 
 # mistral_chat(sys_prompt, mmlu_math, mis_math_result_path)
 # mistral_chat(sys_prompt, mmlu_us, mis_us_result_path)
 
 
-mmlu_time = '/data/jiani/prompt_new/nomal_usage/MMLU/time.csv'
-time_result_path = '/data/jiani/prompt_new/nomal_usage/MMLU/time_result.csv'
+mmlu_time = '/data/root/prompt_new/nomal_usage/MMLU/time.csv'
+time_result_path = '/data/root/prompt_new/nomal_usage/MMLU/time_result.csv'
 
 
 # mmlu_gpt4o(mmlu_time, time_result_path)

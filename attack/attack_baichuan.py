@@ -1,6 +1,6 @@
 import sys
 # 获取包含 utils 目录的父目录
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = './'
 sys.path.append(parent_dir)
 
 import time
@@ -30,7 +30,7 @@ else:
     print("CUDA is not available. Using CPU.")
 
 
-model_id = "/data/jiani/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
+model_id = "baichuan-inc/Baichuan2-13B-Chat"
 tokenizer = AutoTokenizer.from_pretrained(model_id,trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(model_id,device_map=device, torch_dtype=torch.bfloat16,trust_remote_code=True)
 
@@ -176,9 +176,9 @@ def result_statistics(datas):
 
 def main():
 
-    input_file = f'/data/jiani/prompt_new/dataset/jailbreak/prompts_with_questions/jailbreak_prompts_question_1.jsonl'
-    success_file = '/data/jiani/prompt_new/attack/success_prompts/baichuan2/1_t.jsonl'
-    output_file = '/data/jiani/prompt_new/attack/result/baichuan2/1_t.jsonl'
+    input_file = f'./prompts_with_questions/jailbreak_prompts_question_1.jsonl'
+    success_file = './success_prompts/baichuan2/1_t.jsonl'
+    output_file = './result/baichuan2/1_t.jsonl'
     
     print('---------------------reading file over-------------------------')
     datas = read_jsonl_file(input_file)

@@ -1,6 +1,6 @@
 import json, os
 import sys, torch
-parent_dir = '/data/jiani/prompt_new'
+parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 import utils.models as model
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -66,7 +66,7 @@ system_prompt = '''
 
 def local_baichuan(system_prompt, user_prompt, device = device):
 
-    model_id = "/data/jiani/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
+    model_id = "/data/root/prompt/Foundation_Model/baichuan-inc/Baichuan2-13B-Chat"
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     model.generation_config = GenerationConfig.from_pretrained(model_id)
@@ -87,7 +87,7 @@ def local_baichuan(system_prompt, user_prompt, device = device):
 
 def local_mistral(system_prompt, user_prompt, device = device):
 
-    model_id = '/data/jiani/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
+    model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
     model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     model.to(device)
@@ -192,7 +192,7 @@ def result_statistics(datas):
     return total_attempts, successful_attacks, success_rate
 
 def main():
-    current_directory = '/data/jiani/prompt_new/test_origin/result'
+    current_directory = '/data/root/prompt_new/test_origin/result'
     subdirectories = get_subdirectories(current_directory)
 
     #model_list = ['gpt35', 'gpt4o', 'gpt4turb']                # done
@@ -202,7 +202,7 @@ def main():
     #model_list = ['qwen2', 'qwen7b']                           # doing
     model_list = ['mistral', 'mistralv03']
     #model_list = ['baichuan2', 'vicuna7b']
-    checkpoint_path = '/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_main_'+model_list[0]+'.json'
+    checkpoint_path = '/data/root/prompt_new/llamaguard_judge/attack_jailbreak/checkpoint_main_'+model_list[0]+'.json'
     start_subdir_index = 0
 
     # Load the checkpoint if it exists
@@ -216,13 +216,13 @@ def main():
             if(subdir in model_list):
                 print(f"Processing {subdir}...")
                 file_path = os.path.join(current_directory, subdir, 're-number.jsonl')
-                output_path = os.path.join('/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/results',subdir+'.jsonl')
+                output_path = os.path.join('/data/root/prompt_new/llamaguard_judge/attack_jailbreak/results',subdir+'.jsonl')
                 datas = load_jsonl(file_path)
                 model.new_judgment_llama_guard2(datas, device, 1, model_name=subdir, outputpath=output_path) # return STRING "True" if success else "False"
                 # processing result
                 datas = load_jsonl(output_path)
                 result = result_statistics(datas)
-                with open('/data/jiani/prompt_new/llamaguard_judge/attack_jailbreak/results/Attack_Success_Rate_ALL.jsonl', 'a') as f:
+                with open('/data/root/prompt_new/llamaguard_judge/attack_jailbreak/results/Attack_Success_Rate_ALL.jsonl', 'a') as f:
                     f.write(json.dumps({'model': subdir,
                                         'total_attempts': result[0],
                                         'successful_attacks': result[1],
