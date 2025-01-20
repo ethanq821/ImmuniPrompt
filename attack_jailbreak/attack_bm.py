@@ -1,6 +1,6 @@
 import json, os
 import sys, torch
-parent_dir = '/data/root/prompt_new'
+parent_dir = './'
 sys.path.append(parent_dir)
 import utils.models as model
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -11,7 +11,7 @@ import time
 #########################   gpu   #######################
 gpu_id = 999 # magic number
 while(gpu_id not in range(0, torch.cuda.device_count())):
-    input = input("请输入GPU编号：")
+    input = input("Set GPU (0-7)：")
     gpu_id = int(input)
 
 # 检查是否有可用的CUDA设备
@@ -195,15 +195,7 @@ def main():
     current_directory = '/data/root/prompt_new/test_origin/result'
     subdirectories = get_subdirectories(current_directory)
 
-    model_list = ['qwenturbe']                # done
-    #model_list = ['qwenmax', 'qwenplus', 'qwenturbe']          # doing
-    #model_list = ['llama2', 'llama3']                          # done
-    #model_list = ['phi2', 'phi3mini']                          # doing
-    #model_list = ['qwen2', 'qwen7b']                           # doing
-    #model_list = ['mistral', 'mistralv03']
-    #model_list = ['baichuan2', 'vicuna7b']
-    #model_list = ['llama2']
-    #model_name = model_list[0]
+    model_list = ['qwenturbe']                # list models you want to test, please refer to test_model();
 
     system_prompt_orig = "You are a useful assistant. Please answer the questions concisely and informatively. Don't repeat questions! You just need to output the answer.You can only complete one conversation "
 

@@ -123,7 +123,7 @@ def test_model(prompt, target_model, sys_prompt="NULL"):
     elif(target_model == 'llama3'):
         response = model.llama3(prompt, sys_prompt)
         return response
-    elif(target_model == 'qwenturbe'):
+    elif(target_model == 'qwenturbo'):
         response = model.qwent(sys_prompt,prompt)
         return response
     elif(target_model == 'qwenmax'):
@@ -179,25 +179,20 @@ def result_statistics(datas):
 
 def main():
     
-    model_list = ['llama2']
-    counter = 0
+    model_list = ['qwenmax', 'llama2', 'llama3', 'gpt4o']
     
     baseline = 'baseline3'
     filedata = load_jsonl('/data/root/prompt_new/dataset/new/output_q6.jsonl')
-    # for model_names in model_list:
-    #     print(model_names)
-    #     for data in filedata:
-    #         counter += 1
-    #         if(model_names == 'gpt4o'):
-    #             if(counter < 1455):
-    #                 continue
-    #         print("processing ",data['id'], model_names, gpu_id)
-    #         prompt = data['prompt']
-    #         response = test_model(prompt, model_names, sys_prompt=system_prompt)
-    #         data['response'] = response
-    #         with open('/data/root/prompt_new/test_sys_baseline123/'+model_names+'/'+f'{baseline}.jsonl', 'a') as f:
-    #             f.write(json.dumps(data) + '\n'
-    #         )
+    for model_names in model_list:
+        print(model_names)
+        for data in filedata:
+            print("processing ",data['id'], model_names, gpu_id)
+            prompt = data['prompt']
+            response = test_model(prompt, model_names, sys_prompt=system_prompt)
+            data['response'] = response
+            with open('/data/root/prompt_new/test_sys_baseline123/'+model_names+'/'+f'{baseline}.jsonl', 'a') as f:
+                f.write(json.dumps(data) + '\n'
+            )
     
     current_directory = '/data/root/prompt_new/test_sys_baseline123'
     subdirectories = get_subdirectories(current_directory)

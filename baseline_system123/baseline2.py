@@ -118,7 +118,7 @@ def test_model(prompt, target_model, sys_prompt="NULL"):
     elif(target_model == 'llama3'):
         response = model.llama3(prompt, sys_prompt)
         return response
-    elif(target_model == 'qwenturbe'):
+    elif(target_model == 'qwenturbo'):
         response = model.qwent(sys_prompt,prompt)
         return response
     elif(target_model == 'qwenmax'):

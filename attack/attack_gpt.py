@@ -1,9 +1,7 @@
 import sys
 # 获取包含 utils 目录的父目录
-parent_dir = '/data/root/prompt_new'
+parent_dir = './'
 sys.path.append(parent_dir)
-
-
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
@@ -194,9 +192,9 @@ def main():
 
     model_name = str(test_model.__name__)
 
-    input_file = f'/data/root/prompt_new/dataset/jailbreak/prompts_with_questions/jailbreak_prompts_question_1.jsonl'
-    success_file = '/data/root/prompt_new/attack/success_prompts/gpt4o/1_t.jsonl'
-    output_file = '/data/root/prompt_new/attack/result/gpt4o/1_t.jsonl'
+    input_file = f'/data/root/prompt_new/dataset/jailbreak/prompts_with_questions/jailbreak_prompts_question_1.jsonl' # replace with datasets from HF
+    success_file = '/data/root/prompt_new/attack/success_prompts/gpt4o/1_t.jsonl' 
+    output_file = '/data/root/prompt_new/attack/result/gpt4o/1_t.jsonl' 
     
     print('---------------------reading file over-------------------------')
     datas = read_jsonl_file(input_file)

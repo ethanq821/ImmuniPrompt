@@ -1,6 +1,8 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # This software may be used and distributed according to the terms of the Llama 2 Community License Agreement.
 
+# note: This code is only for testing.
+
 import fire
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 import os
@@ -11,7 +13,7 @@ from typing import List, Tuple
 from enum import Enum
 import torch, json, time
 
-gpu_id = 1
+gpu_id = 0
 if torch.cuda.is_available():
     device = torch.device(f"cuda:{gpu_id}")
     torch.cuda.set_device(gpu_id)  # 设置当前设备为指定的GPU
@@ -55,7 +57,7 @@ def main(
         for line in file:
             data = json.loads(line)
             prompts.append(([data['prompt']], AgentType.USER))
-    
+
 
     # prompts: List[Tuple[List[str], AgentType]] = [
     #     (["<Sample user prompt>"], AgentType.USER),
