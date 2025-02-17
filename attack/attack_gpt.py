@@ -1,5 +1,4 @@
 import sys
-# 获取包含 utils 目录的父目录
 parent_dir = './'
 sys.path.append(parent_dir)
 
@@ -12,8 +11,6 @@ import utils.models as model
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
 
 
-
-# 读数据
 def read_jsonl_file(file_path):
     data = []
     with open(file_path, 'r', encoding='utf-8') as jsonl_file:
@@ -114,14 +111,12 @@ def is_attack_succ(datas, output_file, success_file):
             response = data['response']
             attack_result = judgment(response)
 
-            # 在原始数据的基础上添加 'attack_success' 属性
             data['attack_success'] = attack_result
 
             if attack_result == "True":
                 success_shots.append(data)
 
 
-    # 将处理后的数据写回文件
     with open(output_file, "w", encoding='utf-8') as file:
         for data in datas:
             file.write(json.dumps(data) + '\n')

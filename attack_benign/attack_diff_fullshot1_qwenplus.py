@@ -14,10 +14,10 @@ while(gpu_id not in range(0, torch.cuda.device_count())):
     input = input("请输入GPU编号：")
     gpu_id = int(input)
 
-# 检查是否有可用的CUDA设备
+
 if torch.cuda.is_available():
     device = torch.device(f"cuda:{gpu_id}")
-    torch.cuda.set_device(gpu_id)  # 设置当前设备为指定的GPU
+    torch.cuda.set_device(gpu_id)  
     print(f"Using CUDA device: {gpu_id} - {torch.cuda.get_device_name(gpu_id)}")
 else:
     device = torch.device("cpu")
@@ -118,7 +118,7 @@ def local_mistral2(system_prompt, user_prompt, device = device):
     model.to(device)
     for param in model.parameters():
         print(f"Model is on device: {param.device}")
-        break  # 检查一个参数即可
+        break 
     messages = [
         {"role": "user", "content": system_prompt},
         {"role": "assistant", "content": "Well, I will answer your question as best as I can. Please ask me any questions you may have."},
@@ -132,7 +132,7 @@ def local_mistral2(system_prompt, user_prompt, device = device):
 
     #print(decoded[0])
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
+       
         response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
     return response_content
 
@@ -144,7 +144,7 @@ def local_mistral3(system_prompt, user_prompt, device = device):
     model.to(device)
     for param in model.parameters():
         print(f"Model is on device: {param.device}")
-        break  # 检查一个参数即可
+        break  
     messages = [
         {"role": "user", "content": system_prompt},
         {"role": "assistant", "content": "Well, I will answer your question as best as I can. Please ask me any questions you may have."},
@@ -158,7 +158,7 @@ def local_mistral3(system_prompt, user_prompt, device = device):
 
     #print(decoded[0])
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
+       
         response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
     return response_content
 

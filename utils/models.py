@@ -59,10 +59,9 @@ ChatGPT转发API密钥，内含30CA币：sk-glnR840ayfal2O23NNvecKC0TsfBjO64iHNf
 #########################   gpu   #######################
 gpu_id = 0
 
-# 检查是否有可用的CUDA设备
 if torch.cuda.is_available():
     device = torch.device(f"cuda:{gpu_id}")
-    torch.cuda.set_device(gpu_id)  # 设置当前设备为指定的GPU
+    torch.cuda.set_device(gpu_id)  
     print(f"Using CUDA device: {gpu_id} - {torch.cuda.get_device_name(gpu_id)}")
 else:
     device = torch.device("cpu")
@@ -444,8 +443,8 @@ def llama2_13b(user_prompt, system_prompt = "NULL"):
         outputs = model.generate(
             inputs['input_ids'],
             max_length=max_position_embeddings,
-            temperature=0.7,  # 控制生成的随机性
-            top_p=0.2,  # 核采样
+            temperature=0.7,  
+            top_p=0.2,  
             do_sample=True,
             num_return_sequences=1
         )
@@ -479,7 +478,7 @@ def baichuan2(user_prompt):
 
     return response
 
-#  Hello! How can I assist you today?  注意，他并不是字符串！
+#  Hello! How can I assist you today?  
 def qwen7b(user_prompt, sys_prompt="NULL", device=device):
     model_id ='/data/root/prompt/Foundation_Model/Qwen1.5-7B-Chat'
     if(sys_prompt=="NULL"):
@@ -519,7 +518,7 @@ def qwen7b(user_prompt, sys_prompt="NULL", device=device):
     return response
 
 
-#  hello 也没有字符串引号！
+#  hello 
 def mistral_chat(user_prompt):
     model_id = '/data/root/prompt/Foundation_Model/Mistral-7B-Instruct-v0.2'
 
@@ -545,7 +544,6 @@ def mistral_chat(user_prompt):
 
     #print(decoded[0])
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
         
     return  response_content
@@ -664,7 +662,6 @@ def vicuna13bv15(user_prompt, sys_prompt="NULL", device=device):
     decoded = tokenizer.batch_decode(generated_ids)
 
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
         
     return response_content
@@ -702,13 +699,12 @@ def qwen2(user_prompt, sys_prompt="NULL", device=device):
     #print(decoded)
 
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("<|im_start|>Assistant")[-1].split("<|im_start|>assistant")[-1].split("<|im_start|>Assistant:")[-1].replace("<|im_end|>", "").strip()
         
     return response_content
 
 
-#  hello   也没有字符串引号！ good
+#  hello！ good
 def mistralv03(user_prompt, device=device, system_prompt="NULL"):
     model_id = '/data/root/prompt/Foundation_Model/models--mistralai--Mistral-7B-Instruct-v0.3'
 
@@ -735,7 +731,6 @@ def mistralv03(user_prompt, device=device, system_prompt="NULL"):
 
     #print(decoded[0])
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
         
     return  response_content
@@ -773,7 +768,6 @@ def phi2(user_prompt, sys_prompt="NULL", device=device):
     #print(decoded)
 
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("<|im_start|>user")[-1].split("<|im_start|>assistant")[-1].split("<|im_end|>")[-1].replace("<|endoftext|>", "").strip()
         
     return response_content
@@ -811,7 +805,6 @@ def phi3_mini(user_prompt, sys_prompt="NULL", device=device):
     #print(decoded)
 
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("<|user|>")[-1].split("<|assistant|>")[-1].replace("<|end|>", "").strip()
         
     return response_content
@@ -847,7 +840,6 @@ def vicuna7bv15(user_prompt, sys_prompt="NULL",device=device):
     decoded = tokenizer.batch_decode(generated_ids)
 
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("[")[-1].split("[/")[-1].replace("</s>", "").strip()
         
     return response_content
@@ -868,7 +860,6 @@ def gemma_chat(user_prompt, device=device):
     outputs = model.generate(**input_ids, max_new_tokens=1000)
     response = tokenizer.decode(outputs[0])
     #print(response)
-    # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
     response_content = response.split(input_text)[-1].replace("<eos>", "").strip()
     return response_content
 
@@ -903,7 +894,6 @@ def vicuna7b(user_prompt, sys_prompt="NULL", device=device):
     decoded = tokenizer.batch_decode(generated_ids)
 
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
         
     return response_content

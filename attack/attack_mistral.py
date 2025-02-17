@@ -1,5 +1,5 @@
 import sys
-# 获取包含 utils 目录的父目录
+
 parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 
@@ -20,10 +20,10 @@ from transformers.generation.utils import GenerationConfig
 #########################   gpu   #######################
 gpu_id = 3
 
-# 检查是否有可用的CUDA设备
+
 if torch.cuda.is_available():
     device = torch.device(f"cuda:{gpu_id}")
-    torch.cuda.set_device(gpu_id)  # 设置当前设备为指定的GPU
+    torch.cuda.set_device(gpu_id)  
     print(f"Using CUDA device: {gpu_id} - {torch.cuda.get_device_name(gpu_id)}")
 else:
     device = torch.device("cpu")
@@ -38,7 +38,7 @@ model.to(device)
 
 for param in model.parameters():
     print(f"Model is on device: {param.device}")
-    break  # 检查一个参数即可
+    break  
 
 
 
@@ -87,7 +87,6 @@ def mistral(user_prompt):
 
     #print(decoded[0])
     for response in decoded:
-        # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
         response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
 
     return response_content
@@ -149,13 +148,11 @@ def is_attack_succ(datas, output_file, success_file):
             response = data['response']
             attack_result = judgment(response)
 
-            # 在原始数据的基础上添加 'attack_success' 属性
             data['attack_success'] = attack_result
 
             if attack_result == "True":
                 success_shots.append(data)
 
-    # 将处理后的数据写回文件
     with open(output_file, "w", encoding='utf-8') as file:
         for data in datas:
             file.write(json.dumps(data) + '\n')

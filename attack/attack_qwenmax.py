@@ -1,5 +1,4 @@
 import sys
-# 获取包含 utils 目录的父目录
 parent_dir = '/data/root/prompt_new'
 sys.path.append(parent_dir)
 
@@ -13,9 +12,6 @@ import json
 import utils.models as model
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
 
-
-
-# 读数据
 def read_jsonl_file(file_path):
     data = []
     with open(file_path, 'r', encoding='utf-8') as jsonl_file:
@@ -115,14 +111,12 @@ def is_attack_succ(datas, output_file, success_file):
             response = data['response']
             attack_result = judgment(response)
 
-            # 在原始数据的基础上添加 'attack_success' 属性
             data['attack_success'] = attack_result
 
             if attack_result == "True":
                 success_shots.append(data)
 
 
-    # 将处理后的数据写回文件
     with open(output_file, "w", encoding='utf-8') as file:
         for data in datas:
             file.write(json.dumps(data) + '\n')
@@ -134,37 +128,6 @@ def is_attack_succ(datas, output_file, success_file):
     return success_shots
                 
 
-
-'''
-def result_statistics(datas):
-    y_true = []
-    y_pred = []
-    
-    for data in datas:
-        if data.get('jailbreak') is not None:
-            # 假设'jailbreak'字段为1表示实际为正类，为0表示实际为负类
-            y_true.append(1 if data['jailbreak'] else 0)
-            # 'attack_result'为'true'表示预测为正类，为'false'表示预测为负类
-            y_pred.append(1 if data['attack_result'] == 'true' else 0)
-
-    # 计算并打印评价指标
-    accuracy = accuracy_score(y_true, y_pred)
-    precision = precision_score(y_true, y_pred)
-    recall = recall_score(y_true, y_pred)
-    f1 = f1_score(y_true, y_pred)
-    conf_matrix = confusion_matrix(y_true, y_pred)
-    report = classification_report(y_true, y_pred)
-
-    print(f"Accuracy: {accuracy:.2f}")
-    print(f"Precision: {precision:.2f}")
-    print(f"Recall: {recall:.2f}")
-    print(f"F1 Score: {f1:.2f}")
-    print("Confusion Matrix:")
-    print(conf_matrix)
-    print("Classification Report:")
-    print(report)
-
-'''
 def result_statistics(datas):
     total_attempts = 0
     successful_attacks = 0
@@ -215,15 +178,6 @@ def main():
     result_statistics(result)
 
     print('---------------------over-------------------------')
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

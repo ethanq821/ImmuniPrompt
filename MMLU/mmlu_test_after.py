@@ -62,58 +62,52 @@ sys_prompt = '''From now on you need to answer the following questions. Note!I d
 system_prompt = f"#[system]:{system_prompt_mini},\n#[User]:{sys_prompt}"
 # system_prompt = f"#[system]: You are a useful AI and you need to answer the following questions,\n#[User]:{sys_prompt}"
 
+
 gpu_id = 0
 
-# 检查是否有可用的CUDA设备
 if torch.cuda.is_available():
     device = torch.device(f"cuda:{gpu_id}")
-    torch.cuda.set_device(gpu_id)  # 设置当前设备为指定的GPU
+    torch.cuda.set_device(gpu_id)  
     print(f"Using CUDA device: {gpu_id} - {torch.cuda.get_device_name(gpu_id)}")
 else:
     device = torch.device("cpu")
     print("CUDA is not available. Using CPU.")
 
 
-import time  # 引入 time 模块
+import time 
 
 def mmlu_gpt35(input_csv, output_csv):
-    """
-    处理MMLU数据集并评估LLM的性能，同时记录运行时间。
-    
-    :param input_csv: 输入的CSV文件路径
-    :param output_csv: 输出的CSV文件路径
-    """
     results = []
-    total_time = 0  # 用于记录总运行时间
+    total_time = 0  
     
     with open(input_csv, mode='r', encoding='utf-8') as infile:
         reader = csv.reader(infile)
-        header = next(reader)  # 获取表头
+        header = next(reader)  
         
-        # 处理每一行数据
+
         for row in reader:
-            question_text = row[0]  # 问题文本
-            options = row[1:-1]  # 从第2列到倒数第2列是选项
-            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  # 构建选项
-            full_question = f"{question_text}\n{options_text}"  # 拼接问题和选项
+            question_text = row[0]  
+            options = row[1:-1]  
+            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  
+            full_question = f"{question_text}\n{options_text}"  
             
-            correct_answer = row[-1]  # 最后一列为标准答案
+            correct_answer = row[-1] 
             
-            # 开始计时
+            
             start_time = time.time()
             
-            # 调用本地LLM生成答案
+            
             generated_answer = model.chatgpt(system_prompt, full_question)
             generated_answer = generated_answer[0]
             
-            # 结束计时
-            end_time = time.time()
-            total_time += (end_time - start_time)  # 累加运行时间
             
-            # 比较生成答案与标准答案
+            end_time = time.time()
+            total_time += (end_time - start_time)  
+            
+            
             is_correct = (generated_answer.strip().upper() == correct_answer.strip().upper())
             
-            # 保存结果
+           
             results.append({
                 "question": question_text,
                 "correct_answer": correct_answer,
@@ -121,15 +115,15 @@ def mmlu_gpt35(input_csv, output_csv):
                 "is_correct": is_correct
             })
     
-    # 写入评估结果到新的CSV文件
+    
     with open(output_csv, mode='w', encoding='utf-8', newline='') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=["question", "correct_answer", "generated_answer", "is_correct"])
         writer.writeheader()
         writer.writerows(results)
     
-    # 打印运行时间
-    num_questions = len(results)  # 处理的问题数量
-    avg_time = total_time / num_questions if num_questions > 0 else 0  # 计算平均运行时间
+    
+    num_questions = len(results)  
+    avg_time = total_time / num_questions if num_questions > 0 else 0  
     print(f"总运行时间：{total_time:.2f} 秒")
     print(f"平均每个问题运行时间：{avg_time:.2f} 秒")
     
@@ -138,42 +132,30 @@ def mmlu_gpt35(input_csv, output_csv):
 
 
 def mmlu_gpt4o(input_csv, output_csv):
-    """
-    处理MMLU数据集并评估LLM的性能。
-    
-    :param input_csv: 输入的CSV文件路径
-    :param output_csv: 输出的CSV文件路径
-    """
     results = []
-    total_time = 0  # 用于记录总运行时间
+    total_time = 0  
     
     with open(input_csv, mode='r', encoding='utf-8') as infile:
         reader = csv.reader(infile)
-        header = next(reader)  # 获取表头
+        header = next(reader)  
         
-        # 处理每一行数据
         for row in reader:
-            question_text = row[0]  # 问题文本
-            options = row[1:-1]  # 从第2列到倒数第2列是选项
-            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  # 构建选项
-            full_question = f"{question_text}\n{options_text}"  # 拼接问题和选项
+            question_text = row[0]  
+            options = row[1:-1]  
+            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)]) 
+            full_question = f"{question_text}\n{options_text}"  
             
-            correct_answer = row[-1]  # 最后一列为标准答案
-            # 开始计时
+            correct_answer = row[-1] 
             start_time = time.time()
             
-            # 调用本地LLM生成答案
             generated_answer = model.gpt4o(system_prompt, full_question)
             generated_answer = generated_answer[0]
             
-            # 结束计时
             end_time = time.time()
-            total_time += (end_time - start_time)  # 累加运行时间
+            total_time += (end_time - start_time)  
             
-            # 比较生成答案与标准答案
             is_correct = (generated_answer.strip().upper() == correct_answer.strip().upper())
             
-            # 保存结果
             results.append({
                 "question": question_text,
                 "correct_answer": correct_answer,
@@ -181,14 +163,13 @@ def mmlu_gpt4o(input_csv, output_csv):
                 "is_correct": is_correct
             })
     
-    # 写入评估结果到新的CSV文件
     with open(output_csv, mode='w', encoding='utf-8', newline='') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=["question", "correct_answer", "generated_answer", "is_correct"])
         writer.writeheader()
         writer.writerows(results)
-    # 打印运行时间
-    num_questions = len(results)  # 处理的问题数量
-    avg_time = total_time / num_questions if num_questions > 0 else 0  # 计算平均运行时间
+    
+    num_questions = len(results)  
+    avg_time = total_time / num_questions if num_questions > 0 else 0 
     print(f"总运行时间：{total_time:.2f} 秒")
     print(f"平均每个问题运行时间：{avg_time:.2f} 秒")
 
@@ -197,40 +178,34 @@ def mmlu_gpt4o(input_csv, output_csv):
 
 
 def mmlu_qwent(input_csv, output_csv):
-    """
-    处理MMLU数据集并评估LLM的性能。
     
-    :param input_csv: 输入的CSV文件路径
-    :param output_csv: 输出的CSV文件路径
-    """
     results = []
-    total_time = 0  # 用于记录总运行时间
+    total_time = 0  
     
     with open(input_csv, mode='r', encoding='utf-8') as infile:
         reader = csv.reader(infile)
-        header = next(reader)  # 获取表头
-        
-        # 处理每一行数据
+        header = next(reader)  
+
         for row in reader:
-            question_text = row[0]  # 问题文本
-            options = row[1:-1]  # 从第2列到倒数第2列是选项
-            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  # 构建选项
-            full_question = f"{question_text}\n{options_text}"  # 拼接问题和选项
+            question_text = row[0]  
+            options = row[1:-1]  
+            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  
+            full_question = f"{question_text}\n{options_text}"  
             
-            correct_answer = row[-1]  # 最后一列为标准答案
-            # 开始计时
+            correct_answer = row[-1]  
+            
             start_time = time.time()
             
-            # 调用本地LLM生成答案
-            generated_answer = model.qwent(system_prompt, full_question)
-            # 结束计时
-            end_time = time.time()
-            total_time += (end_time - start_time)  # 累加运行时间
             
-            # 比较生成答案与标准答案
+            generated_answer = model.qwent(system_prompt, full_question)
+            
+            end_time = time.time()
+            total_time += (end_time - start_time)  
+            
+            
             is_correct = (generated_answer.strip().upper() == correct_answer.strip().upper())
             
-            # 保存结果
+            
             results.append({
                 "question": question_text,
                 "correct_answer": correct_answer,
@@ -238,14 +213,14 @@ def mmlu_qwent(input_csv, output_csv):
                 "is_correct": is_correct
             })
     
-    # 写入评估结果到新的CSV文件
+    
     with open(output_csv, mode='w', encoding='utf-8', newline='') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=["question", "correct_answer", "generated_answer", "is_correct"])
         writer.writeheader()
         writer.writerows(results)
-        # 打印运行时间
-    num_questions = len(results)  # 处理的问题数量
-    avg_time = total_time / num_questions if num_questions > 0 else 0  # 计算平均运行时间
+        
+    num_questions = len(results)  
+    avg_time = total_time / num_questions if num_questions > 0 else 0  
     print(f"总运行时间：{total_time:.2f} 秒")
     print(f"平均每个问题运行时间：{avg_time:.2f} 秒")
     
@@ -259,33 +234,33 @@ def mmlu_qwenmax(input_csv, output_csv):
     :param output_csv: 输出的CSV文件路径
     """
     results = []
-    total_time = 0  # 用于记录总运行时间
+    total_time = 0  
     
     with open(input_csv, mode='r', encoding='utf-8') as infile:
         reader = csv.reader(infile)
-        header = next(reader)  # 获取表头
+        header = next(reader)  
         
-        # 处理每一行数据
+        
         for row in reader:
-            question_text = row[0]  # 问题文本
-            options = row[1:-1]  # 从第2列到倒数第2列是选项
-            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  # 构建选项
-            full_question = f"{question_text}\n{options_text}"  # 拼接问题和选项
+            question_text = row[0]  
+            options = row[1:-1]  
+            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  
+            full_question = f"{question_text}\n{options_text}"  
             
-            correct_answer = row[-1]  # 最后一列为标准答案
-            # 开始计时
+            correct_answer = row[-1]  
+            
             start_time = time.time()
             
-            # 调用本地LLM生成答案
-            generated_answer = model.qwenmax(system_prompt, full_question)
-            # 结束计时
-            end_time = time.time()
-            total_time += (end_time - start_time)  # 累加运行时间
             
-            # 比较生成答案与标准答案
+            generated_answer = model.qwenmax(system_prompt, full_question)
+            
+            end_time = time.time()
+            total_time += (end_time - start_time)  
+            
+            
             is_correct = (generated_answer.strip().upper() == correct_answer.strip().upper())
             
-            # 保存结果
+            
             results.append({
                 "question": question_text,
                 "correct_answer": correct_answer,
@@ -293,14 +268,14 @@ def mmlu_qwenmax(input_csv, output_csv):
                 "is_correct": is_correct
             })
     
-    # 写入评估结果到新的CSV文件
+    
     with open(output_csv, mode='w', encoding='utf-8', newline='') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=["question", "correct_answer", "generated_answer", "is_correct"])
         writer.writeheader()
         writer.writerows(results)
-        # 打印运行时间
-    num_questions = len(results)  # 处理的问题数量
-    avg_time = total_time / num_questions if num_questions > 0 else 0  # 计算平均运行时间
+        
+    num_questions = len(results)  
+    avg_time = total_time / num_questions if num_questions > 0 else 0  
     print(f"总运行时间：{total_time:.2f} 秒")
     print(f"平均每个问题运行时间：{avg_time:.2f} 秒")
     
@@ -320,21 +295,21 @@ def llama2( system_prompt,input_csv, output_csv):
     max_position_embeddings = model_config.max_position_embeddings
 
     results = []
-    total_time = 0  # 用于记录总运行时间
+    total_time = 0  
     
     with open(input_csv, mode='r', encoding='utf-8') as infile:
         reader = csv.reader(infile)
-        header = next(reader)  # 获取表头
+        header = next(reader)  
         
-        # 处理每一行数据
+        
         for row in reader:
-            question_text = row[0]  # 问题文本
-            options = row[1:-1]  # 从第2列到倒数第2列是选项
-            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  # 构建选项
-            full_question = f"{question_text}\n{options_text}"  # 拼接问题和选项
+            question_text = row[0]  
+            options = row[1:-1]  
+            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  
+            full_question = f"{question_text}\n{options_text}"  
             
-            correct_answer = row[-1]  # 最后一列为标准答案
-            # 开始计时
+            correct_answer = row[-1]  
+            
             start_time = time.time()
             
 
@@ -352,8 +327,8 @@ def llama2( system_prompt,input_csv, output_csv):
                 outputs = model.generate(
                     inputs['input_ids'],
                     max_length=max_position_embeddings,
-                    temperature=0.7,  # 控制生成的随机性
-                    top_p=0.2,  # 核采样
+                    temperature=0.7,  
+                    top_p=0.2,  
                     do_sample=True,
                     num_return_sequences=1
                 )
@@ -361,18 +336,18 @@ def llama2( system_prompt,input_csv, output_csv):
                 response = tokenizer.decode(outputs[0], skip_special_tokens=True)
                 response = response.split('Assistant:')[-1].strip()
 
-            # 调用本地LLM生成答案
+            
             generated_answer = response
 
-            # 结束计时
+            
             end_time = time.time()
-            total_time += (end_time - start_time)  # 累加运行时间
+            total_time += (end_time - start_time)  
 
             
-            # 比较生成答案与标准答案
+            
             is_correct = (generated_answer.strip().upper() == correct_answer.strip().upper())
             
-            # 保存结果
+            
             results.append({
                 "question": question_text,
                 "correct_answer": correct_answer,
@@ -380,14 +355,14 @@ def llama2( system_prompt,input_csv, output_csv):
                 "is_correct": is_correct
             })
     
-    # 写入评估结果到新的CSV文件
+    
     with open(output_csv, mode='w', encoding='utf-8', newline='') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=["question", "correct_answer", "generated_answer", "is_correct"])
         writer.writeheader()
         writer.writerows(results)
-    # 打印运行时间
-    num_questions = len(results)  # 处理的问题数量
-    avg_time = total_time / num_questions if num_questions > 0 else 0  # 计算平均运行时间
+    
+    num_questions = len(results)  
+    avg_time = total_time / num_questions if num_questions > 0 else 0  
     print(f"总运行时间：{total_time:.2f} 秒")
     print(f"平均每个问题运行时间：{avg_time:.2f} 秒")
     
@@ -407,21 +382,21 @@ def llama3( system_prompt,input_csv, output_csv):
     max_position_embeddings = model_config.max_position_embeddings
 
     results = []
-    total_time = 0  # 用于记录总运行时间
+    total_time = 0  
     
     with open(input_csv, mode='r', encoding='utf-8') as infile:
         reader = csv.reader(infile)
-        header = next(reader)  # 获取表头
+        header = next(reader)  
         
-        # 处理每一行数据
+        
         for row in reader:
-            question_text = row[0]  # 问题文本
-            options = row[1:-1]  # 从第2列到倒数第2列是选项
-            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  # 构建选项
-            full_question = f"{question_text}\n{options_text}"  # 拼接问题和选项
+            question_text = row[0]  
+            options = row[1:-1]  
+            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  
+            full_question = f"{question_text}\n{options_text}"  
             
-            correct_answer = row[-1]  # 最后一列为标准答案
-            # 开始计时
+            correct_answer = row[-1]  
+            
             start_time = time.time()
             
 
@@ -439,8 +414,8 @@ def llama3( system_prompt,input_csv, output_csv):
                 outputs = model.generate(
                     inputs['input_ids'],
                     max_length=max_position_embeddings,
-                    temperature=0.7,  # 控制生成的随机性
-                    top_p=0.2,  # 核采样
+                    temperature=0.7,  
+                    top_p=0.2,  
                     do_sample=True,
                     num_return_sequences=1
                 )
@@ -448,18 +423,18 @@ def llama3( system_prompt,input_csv, output_csv):
                 response = tokenizer.decode(outputs[0], skip_special_tokens=True)
                 response = response.split('Assistant:')[-1].strip()
 
-            # 调用本地LLM生成答案
+            
             generated_answer = response
 
-            # 结束计时
+            
             end_time = time.time()
-            total_time += (end_time - start_time)  # 累加运行时间
+            total_time += (end_time - start_time)  
 
             
-            # 比较生成答案与标准答案
+            
             is_correct = (generated_answer.strip().upper() == correct_answer.strip().upper())
             
-            # 保存结果
+            
             results.append({
                 "question": question_text,
                 "correct_answer": correct_answer,
@@ -467,14 +442,14 @@ def llama3( system_prompt,input_csv, output_csv):
                 "is_correct": is_correct
             })
     
-    # 写入评估结果到新的CSV文件
+    
     with open(output_csv, mode='w', encoding='utf-8', newline='') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=["question", "correct_answer", "generated_answer", "is_correct"])
         writer.writeheader()
         writer.writerows(results)
-    # 打印运行时间
-    num_questions = len(results)  # 处理的问题数量
-    avg_time = total_time / num_questions if num_questions > 0 else 0  # 计算平均运行时间
+    
+    num_questions = len(results)  
+    avg_time = total_time / num_questions if num_questions > 0 else 0  
     print(f"总运行时间：{total_time:.2f} 秒")
     print(f"平均每个问题运行时间：{avg_time:.2f} 秒")
     
@@ -492,16 +467,16 @@ def mistral_chat(sys_prompt, input_csv, output_csv):
     
     with open(input_csv, mode='r', encoding='utf-8') as infile:
         reader = csv.reader(infile)
-        header = next(reader)  # 获取表头
+        header = next(reader)  
         
-        # 处理每一行数据
+        
         for row in reader:
-            question_text = row[0]  # 问题文本
-            options = row[1:-1]  # 从第2列到倒数第2列是选项
-            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  # 构建选项
-            full_question = f"{question_text}\n{options_text}"  # 拼接问题和选项
+            question_text = row[0]  
+            options = row[1:-1]  
+            options_text = "\n".join([f"Option {chr(65+i)}: {option}" for i, option in enumerate(options)])  
+            full_question = f"{question_text}\n{options_text}"  
             
-            correct_answer = row[-1]  # 最后一列为标准答案
+            correct_answer = row[-1]  
 
             messages = [
                 {"role": "user", "content": system_prompt},
@@ -518,17 +493,17 @@ def mistral_chat(sys_prompt, input_csv, output_csv):
             decoded = tokenizer.batch_decode(generated_ids)
 
 
-            #print(decoded[0])
+            
             for response in decoded:
-                # 提取 "<s> [INST]" 之后的内容，并移除结尾的 "</s>"
+                
                 response_content = response.split("[INST]")[-1].split("[/INST]")[-1].replace("</s>", "").strip()
     
             generated_answer = response_content
             
-            # 比较生成答案与标准答案
+            
             is_correct = (generated_answer.strip().upper() == correct_answer.strip().upper())
             
-            # 保存结果
+            
             results.append({
                 "question": question_text,
                 "correct_answer": correct_answer,
@@ -536,7 +511,7 @@ def mistral_chat(sys_prompt, input_csv, output_csv):
                 "is_correct": is_correct
             })
     
-    # 写入评估结果到新的CSV文件
+    
     with open(output_csv, mode='w', encoding='utf-8', newline='') as outfile:
         writer = csv.DictWriter(outfile, fieldnames=["question", "correct_answer", "generated_answer", "is_correct"])
         writer.writeheader()
@@ -545,55 +520,55 @@ def mistral_chat(sys_prompt, input_csv, output_csv):
     print(f"mistral处理完成！评估结果已保存至：{output_csv}")
 
 
-# # list all files in /data/root/prompt_new/nomal_usage/MMLU/test
-# files = os.listdir('/data/root/prompt_new/nomal_usage/MMLU/test') 
-
-# for file in files:
-#     for models in ['gpt4oraw']:
-#         if file.endswith('.csv'):
-#             input_csv = os.path.join('/data/root/prompt_new/nomal_usage/MMLU/test', file)
-#             output_csv = os.path.join('/data/root/prompt_new/nomal_usage/MMLU/after', models, file)
-#             already_done = os.listdir('/data/root/prompt_new/nomal_usage/MMLU/after/' + models)
-#             if('gpt4o' in models):
-#                 if file not in already_done:
-#                     mmlu_gpt4o(input_csv, output_csv)
-#                 else:
-#                     print(f"{file} 已经处理过，跳过")
-#             elif('qwen' in models):
-#                 if file not in already_done:
-#                     mmlu_qwen(input_csv, output_csv)
-#                 else:
-#                     print(f"{file} 已经处理过，跳过")
-#             else:
-#                 print("error")
-#                 break
 
 
-# mmlu_gpt4o(mmlu_math, gpt4_math_result_path)
-
-# mmlu_gpt4o(mmlu_us, gpt4_us_result_path)
 
 
-# ll_math_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/llama2/math_result.csv'  # 输出文件路径
-# ll_us_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/llama2/us_result.csv'
 
-# llama2(sys_prompt, mmlu_math, ll_math_result_path)
-# llama2(sys_prompt, mmlu_us, ll_us_result_path)
 
-# mis_math_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/mistral2/math_result.csv'
-# mis_us_result_path = '/data/root/prompt_new/nomal_usage/MMLU/after/mistral2/us_result.csv'
 
-# mistral_chat(sys_prompt, mmlu_math, mis_math_result_path)
-# mistral_chat(sys_prompt, mmlu_us, mis_us_result_path)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 mmlu_time = '/data/root/prompt_new/nomal_usage/MMLU/time.csv'
 time_result_path = '/data/root/prompt_new/nomal_usage/MMLU/time_result.csv'
 
 
-# mmlu_gpt4o(mmlu_time, time_result_path)
-# mmlu_gpt35(mmlu_time, time_result_path)
-# mmlu_qwent(mmlu_time, time_result_path)
-# mmlu_qwenmax(mmlu_time, time_result_path)
+
+
+
+
 llama2(sys_prompt, mmlu_time, time_result_path)
 llama3(sys_prompt, mmlu_time, time_result_path)
